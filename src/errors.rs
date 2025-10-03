@@ -81,6 +81,7 @@ impl From<io::ErrorKind> for Error {
     }
 }
 
+#[cfg_attr(docsrs, doc(cfg(feature = "enumerate")))]
 #[cfg(feature = "enumerate")]
 impl From<libudev::Error> for Error {
     /// Creates an Io error straight from a libudev::Error

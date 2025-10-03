@@ -112,6 +112,7 @@
 //!   Requires superuser privileges to run/pass.
 //!
 
+#![cfg_attr(docsrs, feature(doc_cfg))]
 // clippy: do not warn about things like "SocketCAN" inside the docs
 #![allow(clippy::doc_markdown)]
 // Some lints
@@ -152,40 +153,52 @@ pub use frame::{
     Frame,
 };
 
+#[cfg_attr(docsrs, doc(cfg(feature = "dump")))]
 #[cfg(feature = "dump")]
 pub mod dump;
 
 pub mod socket;
 pub use socket::{CanFdSocket, CanFilter, CanSocket, ShouldRetry, Socket, SocketOptions};
 
+#[cfg_attr(docsrs, doc(cfg(feature = "netlink")))]
 #[cfg(feature = "netlink")]
 pub mod nl;
 
+#[cfg_attr(docsrs, doc(cfg(feature = "netlink")))]
 #[cfg(feature = "netlink")]
 pub use nl::{CanCtrlMode, CanInterface, InterfaceCanParams};
 
 /// Optional tokio support
+#[cfg_attr(docsrs, doc(cfg(feature = "tokio")))]
 #[cfg(feature = "tokio")]
 pub mod tokio;
 
 /// Optional support for async-io-based async runtimes, like async-std and smol.
+#[cfg_attr(
+    docsrs,
+    doc(cfg(any(feature = "async-io", feature = "async-std", feature = "smol")))
+)]
 #[cfg(any(feature = "async-io", feature = "async-std", feature = "smol"))]
 pub mod async_io;
 
 /// Using the specific definition for 'smol', just re-export the async_io module.
+#[cfg_attr(docsrs, doc(cfg(feature = "smol")))]
 #[cfg(feature = "smol")]
 pub mod smol {
     pub use crate::async_io::*;
 }
 
 /// Using the specific definition for 'async_std', just re-export the async_io module.
+#[cfg_attr(docsrs, doc(cfg(feature = "async-std")))]
 #[cfg(feature = "async-std")]
 pub mod async_std {
     pub use crate::async_io::*;
 }
 
+#[cfg_attr(docsrs, doc(cfg(feature = "enumerate")))]
 #[cfg(feature = "enumerate")]
 pub mod enumerate;
+#[cfg_attr(docsrs, doc(cfg(feature = "enumerate")))]
 #[cfg(feature = "enumerate")]
 pub use enumerate::available_interfaces;
 
